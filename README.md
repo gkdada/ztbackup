@@ -20,7 +20,7 @@ samba connection.
 
 ## Command Syntax
 
- ztbackup [arguments] source-folder destination-folder
+    ztbackup [arguments] source-folder destination-folder
 
 * If either source-folder or destination-folder has spaces, you need to enclose the folder name in double quotes.
 * arguments can be combined in to a single parameter. For example, "-a","-b" and "-r" can be combined to "-abr".
