@@ -77,7 +77,7 @@ int main(int argc, char **argv)
     char szLogString[1000];
     
 
-    sprintf(szLogString,"Zero-touch Backup command-line tool Ver. %s (built %s). Copyright (c) gkdada 2008-%c%c%c%c.\r\n",PACKAGE_VERSION,__DATE__,BUILD_YEAR_CH0,BUILD_YEAR_CH1,BUILD_YEAR_CH2,BUILD_YEAR_CH3);
+    snprintf(szLogString,sizeof(szLogString), "Zero-touch Backup command-line tool Ver. %s (built %s). Copyright (c) gkdada 2008-%c%c%c%c.\r\n",PACKAGE_VERSION,__DATE__,BUILD_YEAR_CH0,BUILD_YEAR_CH1,BUILD_YEAR_CH2,BUILD_YEAR_CH3);
     printf("%s",szLogString);
     mLogger.AddToLog(szLogString);
 

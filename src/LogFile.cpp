@@ -16,7 +16,7 @@ CLogFile::CLogFile(const char* szLogPath)
     time(&tCurrent);
     struct tm* tmLocal = localtime(&tCurrent);
     
-    sprintf(szLogFilename, "%04u%02u.log",tmLocal->tm_year+1900,tmLocal->tm_mon+1);
+    snprintf(szLogFilename, sizeof(szLogFilename), "%04u%02u.log",tmLocal->tm_year+1900,tmLocal->tm_mon+1);
     
     m_strLogFilePath = szLogPath;
     m_strLogFilePath += "/";

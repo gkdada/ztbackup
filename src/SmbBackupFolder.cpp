@@ -395,7 +395,7 @@ static void sbf_get_auth_data_fn(const char * pServer,
     GError* pError = NULL;
     
     char SectionName[1000];
-    sprintf(SectionName,"%s/%s",pServer,pShare);
+    snprintf(SectionName, sizeof(SectionName), "%s/%s",pServer,pShare);
  
     bool bLoaded = g_key_file_load_from_file(pFile,pConfFile.c_str(),G_KEY_FILE_NONE,&pError);
     if(bLoaded != false)

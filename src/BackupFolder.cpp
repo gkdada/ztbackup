@@ -23,9 +23,9 @@ void PrintCopying(const char* szFilename, off64_t fCopied, off64_t fSize, bool b
 {
     off64_t Percent = (fCopied * 100)/fSize;
     if(bRestoring)
-        printf("\33[2K\rRestoring %s %3lu%% %c",szFilename, Percent, g_SkipChars[g_iCurrentCopyChar++ & 3]);
+        printf("\33[2K\rRestoring %s %3lu%% %c",szFilename, (unsigned long)Percent, g_SkipChars[g_iCurrentCopyChar++ & 3]);
     else
-        printf("\33[2K\rCopying %s %3lu%% %c",szFilename, Percent, g_SkipChars[g_iCurrentCopyChar++ & 3]);
+        printf("\33[2K\rCopying %s %3lu%% %c",szFilename, (unsigned long)Percent, g_SkipChars[g_iCurrentCopyChar++ & 3]);
 }
 
 void PrintChecking()
@@ -52,7 +52,7 @@ CBackupFolder::~CBackupFolder()
 string NumWithCommas(uint64_t Value)
 {
     char striff[30];
-    sprintf(striff,"%lu",Value);
+    snprintf(striff, sizeof(striff), "%llu", Value);
     
     string numWithCommas = striff;
     int insertPosition = numWithCommas.length() - 3;
@@ -84,19 +84,19 @@ void CBackupFolder::printStats(uint32_t uiDestDeleteCount, CLogFile* pLogger)
 {
     char PrintBuf[4000];
     
-    size_t iCount = sprintf(PrintBuf,"Completed At %s\r\n",getTimeStr().c_str());
+    size_t iCount = snprintf(PrintBuf,sizeof(PrintBuf), "Completed At %s\r\n",getTimeStr().c_str());
     
-    iCount += sprintf(&PrintBuf[iCount], "\r\nFolders traversed            %15s\r\n",NumWithCommas(m_ztStats.m_uiNumFolders).c_str());
-    iCount += sprintf(&PrintBuf[iCount],"Files skipped                %15s\r\n",NumWithCommas(m_ztStats.m_uiNumFilesSkipped).c_str());
+    iCount += snprintf(&PrintBuf[iCount],sizeof(PrintBuf)-iCount, "\r\nFolders traversed            %15s\r\n",NumWithCommas(m_ztStats.m_uiNumFolders).c_str());
+    iCount += snprintf(&PrintBuf[iCount],sizeof(PrintBuf)-iCount, "Files skipped                %15s\r\n",NumWithCommas(m_ztStats.m_uiNumFilesSkipped).c_str());
     if(m_ztStats.m_ullSizeFilesSkipped)
-        iCount += sprintf(&PrintBuf[iCount],"Size of files skipped        %15s octets\r\n",NumWithCommas(m_ztStats.m_ullSizeFilesSkipped).c_str());
-    iCount += sprintf(&PrintBuf[iCount],"Files copied                 %15s\r\n",NumWithCommas(m_ztStats.m_uiNumFilesCopied).c_str());
+        iCount += snprintf(&PrintBuf[iCount],sizeof(PrintBuf)-iCount, "Size of files skipped        %15s octets\r\n",NumWithCommas(m_ztStats.m_ullSizeFilesSkipped).c_str());
+    iCount += snprintf(&PrintBuf[iCount],sizeof(PrintBuf)-iCount, "Files copied                 %15s\r\n",NumWithCommas(m_ztStats.m_uiNumFilesCopied).c_str());
     if(m_ztStats.m_ullSizeFilesCopied)
-        iCount += sprintf(&PrintBuf[iCount],"Size of files copied         %15s octets\r\n",NumWithCommas(m_ztStats.m_ullSizeFilesCopied).c_str());
-    iCount += sprintf(&PrintBuf[iCount],"Files restored               %15s\r\n",NumWithCommas(m_ztStats.m_uiNumFilesRestored).c_str());
+        iCount += snprintf(&PrintBuf[iCount],sizeof(PrintBuf)-iCount, "Size of files copied         %15s octets\r\n",NumWithCommas(m_ztStats.m_ullSizeFilesCopied).c_str());
+    iCount += snprintf(&PrintBuf[iCount],sizeof(PrintBuf)-iCount, "Files restored               %15s\r\n",NumWithCommas(m_ztStats.m_uiNumFilesRestored).c_str());
     if(m_ztStats.m_ullSizeFilesRestored)
-        iCount += sprintf(&PrintBuf[iCount],"Size of files restored       %15s octets\r\n",NumWithCommas(m_ztStats.m_ullSizeFilesRestored).c_str());
-    iCount += sprintf(&PrintBuf[iCount],"Files deleted                %15s\r\n",NumWithCommas(uiDestDeleteCount).c_str());
+        iCount += snprintf(&PrintBuf[iCount],sizeof(PrintBuf)-iCount, "Size of files restored       %15s octets\r\n",NumWithCommas(m_ztStats.m_ullSizeFilesRestored).c_str());
+    iCount += snprintf(&PrintBuf[iCount],sizeof(PrintBuf)-iCount, "Files deleted                %15s\r\n",NumWithCommas(uiDestDeleteCount).c_str());
     
     PrintBuf[iCount] = 0;
     
@@ -130,11 +130,11 @@ int CBackupFolder::StartBackup(CBackupFolder* pDest, FILE_OPTION eFileOption, FO
     
     char szLogString[2000];
     
-    sprintf(szLogString,"\r\nInitiating zero-touch Backup at %s\r\n",getTimeStr().c_str());
+    snprintf(szLogString, sizeof(szLogString), "\r\nInitiating zero-touch Backup at %s\r\n",getTimeStr().c_str());
     pLogger->AddToLog(szLogString);
-    sprintf(szLogString,"Source Folder: %s\r\n",m_strRootPath.c_str());
+    snprintf(szLogString, sizeof(szLogString), "Source Folder: %s\r\n",m_strRootPath.c_str());
     pLogger->AddToLog(szLogString);
-    sprintf(szLogString,"Destination Folder: %s\r\n\r\n",pDest->m_strRootPath.c_str());
+    snprintf(szLogString, sizeof(szLogString), "Destination Folder: %s\r\n\r\n",pDest->m_strRootPath.c_str());
     pLogger->AddToLog(szLogString);
 
     if(eFileOption == fileOptionNotSet)
@@ -605,7 +605,7 @@ char CBackupFolder::AskTimedDeleteQuestion(const char* szRelativePath, bool bIsA
     printf("The source for the backed up %s '%s' doesn't exist anymore.\r\n",szItemType, szRelativePath);
     
     char szQueryString[200];
-    sprintf(szQueryString, "Do you want to (d)elete, (r)estore, or (l)eave the %s?",szItemType);
+    snprintf(szQueryString, sizeof(szQueryString), "Do you want to (d)elete, (r)estore, or (l)eave the %s?",szItemType);
     
     useconds_t usecs = DEFAULT_SLEEP_LEN;
     char c;
@@ -660,7 +660,7 @@ char CBackupFolder::AskTimedRestoreQuestion(const char* szRelativePath, CBackupF
     printf("destination: %'-26llu %s\r\n", ModSize, getTimeStr(ModTime).c_str());
     
     char szQueryString[200];
-    sprintf(szQueryString, "Do you want to (b)ackup, (r)estore, or (l)eave the file?");
+    snprintf(szQueryString, sizeof(szQueryString), "Do you want to (b)ackup, (r)estore, or (l)eave the file?");
     
     useconds_t usecs = DEFAULT_SLEEP_LEN;
     char c;

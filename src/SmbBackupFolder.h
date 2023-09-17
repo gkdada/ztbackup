@@ -1,7 +1,11 @@
 #ifndef CSMBBACKUPFOLDER_H
 #define CSMBBACKUPFOLDER_H
 
+#ifdef __APPLE__
+#include <libsmbclient.h>
+#else
 #include <samba-4.0/libsmbclient.h>
+#endif
 
 #include "BackupFolder.h" // Base class: CBackupFolder
 
