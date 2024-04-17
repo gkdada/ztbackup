@@ -1,7 +1,7 @@
 # ztbackup
 C++ version of zero-touch backup. Create/maintain backup locally, on external media or on remote samba/sftp server
 
-his tool allows you to backup folders from/to local drives, samba shares and over ssh/sftp using sync method (i.e. 
+This tool allows you to backup folders from/to local drives, samba shares and over ssh/sftp using sync method (i.e. 
 only the newer files are copied). Optionally recursive.
 
 The source or destination can be a local drive (relative or absolute path), samba share or an ssh address. 
@@ -28,16 +28,24 @@ samba connection.
 Arguments:
 
  -r  Recursively back up the contents of source-folder into destination-folder.
+ 
  -a  Ask before deleting backed up files when the source for that file no longer exists. You can also optinally restore
       the file back to the source location. The question times out after a certain number of seconds and backup
       process continues leaving the file intact.
+ 
  -b  Ask before deleting backed up folders when the source for that folder no longer exists. You can also optionally
       restore the folder back to the source location. Question times out similar to "-a" option.
+ 
  -l  Leave a backed up file alone when the source for that file no longer exists. Do not delete the file.
+ 
  -m  Leave a backed up folder alone when the source for that file no longer exists. Do not delete the folder.
+ 
  -d  Delete a backed up file automatically when the source for that file no longer exists.
+ 
  -e  Delete a backed up folder automatically when the source for that folder no longer exists.
+ 
  -n  Do not follow symbolic links when backing up a file or a folder.
+ 
  -u  Use anonymous access for any samba share in the source and/or destination folders.
 
 * Use of options -d and -e are NOT RECOMMENDED since they will result in losing back-up files for source that
