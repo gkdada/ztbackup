@@ -28,26 +28,37 @@ ztbackup [arguments] source-folder destination-folder
 Arguments:
 
  -r  Recursively back up the contents of source-folder into destination-folder.
+
  -a  Ask before deleting backed up files when the source for that file no longer exists. You can also optinally restore
       the file back to the source location. The question times out after a certain number of seconds and backup
       process continues leaving the file intact.
+
  -b  Ask before deleting backed up folders when the source for that folder no longer exists. You can also optionally
       restore the folder back to the source location. Question times out similar to "-a" option.
+
  -l  Leave a backed up file alone when the source for that file no longer exists. Do not delete the file.
+
  -m  Leave a backed up folder alone when the source for that file no longer exists. Do not delete the folder.
+ 
  -d  Delete a backed up file automatically when the source for that file no longer exists.
+ 
  -e  Delete a backed up folder automatically when the source for that folder no longer exists.
+ 
  -n  Do not follow symbolic links when backing up a file or a folder.
+ 
  -u  Use anonymous access for any samba share in the source and/or destination folders.
 
 * Use of options -d and -e are NOT RECOMMENDED since they will result in losing back-up files for source that
    may have been accidentally deleted.
+
 * Options -l and -m are meant used in scripts (especially the ones that are run as cron jobs)  when user 
    interactions are not possible. 
+
 * The most frequently used combinations of arguments are "-lmr" and "-abr". options "-lmr" will give you a recursive
    backup of a folder while leaving the backups for any deleted files or folders intact. "-abr" will give you a 
    recursive backup of a folder while asking whether you want to delete (or restore or leave) the backup for the deleted
    files or folders.
+
 * The combination "-lmr" is convenient for running in an automatically run script (as in a cron job). The same command
    can then be run manually with "-abr" option to delete the backup copies of intentionally deleted files and folders.
 
