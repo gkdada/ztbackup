@@ -74,3 +74,12 @@ ztbackup now supports excluding one or more folders and/or files at any level fr
 *  Try not to add too many lines to a single .ztexclude file since it has to be loaded into memory in its entirety for the duration of the
    processing of that folder (and its sub-folders).
 *  All shell wildcards are supported (?, *, [...] and [!...])
+
+## Version 4.0
+
+### Note
+
+Skipped version 2 and 3 because those were used by the sister go-lang version of ztbackup (see https://github.com/gkdada/gozt). We're now back to updating the c++
+version and hence we will resume versioning from 4.0
+
+We have switched from configure/make to cmake style of building and deployment.
