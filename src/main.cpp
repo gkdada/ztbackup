@@ -236,7 +236,7 @@ int main(int argc, char **argv)
     
     if(!SrcFolder.compare(0,6,"smb://"))
         pSrcFolder = new CSmbBackupFolder();
-    else if(!SrcFolder.compare(0,6,"ssh://"))
+    else if((SrcFolder.compare(0,6,"ssh://") == 0) || (SrcFolder.compare(0,7,"sftp://") == 0))
         pSrcFolder = new CSsh2BackupFolder();
     else
         pSrcFolder = new CLocalBackupFolder();
@@ -244,7 +244,7 @@ int main(int argc, char **argv)
     
     if(!DstFolder.compare(0,6,"smb://"))
         pDestFolder = new CSmbBackupFolder();
-    else if(!DstFolder.compare(0,6,"ssh://"))
+    else if((DstFolder.compare(0,6,"ssh://") == 0) || (DstFolder.compare(0,7,"sftp://") == 0))
         pDestFolder = new CSsh2BackupFolder();
     else
         pDestFolder = new CLocalBackupFolder();

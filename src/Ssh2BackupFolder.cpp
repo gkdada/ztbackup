@@ -60,9 +60,13 @@ INIT_STATUS CSsh2BackupFolder::splitSshPath(const char* szRootFolder)
     m_strSshRootPath.clear();
     
     //ssh://username[:password]@serveriporname[:port]/onefolder/twofolder......
+    //sftp://username[:password]@serveriporname[:port]/onefolder/twofolder......
     int iCur = 0;
     if(!strncmp(szRootFolder,"ssh://",6))//MUST be. Otherwise, we wouldn't even come here!
         iCur = 6;
+    else if(!strncmp(szRootFolder,"sftp://",7)){
+        iCur = 7;
+    }
     //start copying username.
     while(!IsSplitDelimiterChar(szRootFolder[iCur]))
         m_strUsername += szRootFolder[iCur++];
