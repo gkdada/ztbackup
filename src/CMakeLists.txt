@@ -14,3 +14,5 @@ pkg_check_modules(deps REQUIRED IMPORTED_TARGET glib-2.0 smbclient libssh2)
 
 add_executable(ztbackup main.cpp BackupFolder.cpp ExcludeList.cpp LocalBackupFolder.cpp LogFile.cpp SmbBackupFolder.cpp Ssh2BackupFolder.cpp Util.cpp)
 target_link_libraries(ztbackup PkgConfig::deps)
+
+install(TARGETS ztbackup DESTINATION bin)
