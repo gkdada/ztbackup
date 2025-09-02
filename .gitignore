@@ -49,4 +49,8 @@ stamp-h1
 *.log
 *.status
 
+#build files
+build/*
 
+#local files
+*.vscode

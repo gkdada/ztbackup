@@ -1,6 +1,6 @@
 #include "SmbBackupFolder.h"
 #include <string.h>
-#include <glib.h>
+#include <glib-2.0/glib.h>
 #include <errno.h>
 
 bool g_bUseAnonymousAccess = false;

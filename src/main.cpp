@@ -1,11 +1,12 @@
 #include <unistd.h>
 #include <termios.h>            //termios, TCSANOW, ECHO, ICANON
-#include <config.h>
 //#include "BackupRoutine.h"
 #include "LocalBackupFolder.h"
 #include "SmbBackupFolder.h"
 //#include "SshBackupFolder.h"
 #include "Ssh2BackupFolder.h"
+
+#define PACKAGE_VERSION "4.0"
 
 #define BUILD_YEAR_CH0 (__DATE__[ 7])
 #define BUILD_YEAR_CH1 (__DATE__[ 8])
