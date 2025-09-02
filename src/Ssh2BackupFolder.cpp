@@ -108,6 +108,10 @@ INIT_STATUS CSsh2BackupFolder::splitSshPath(const char* szRootFolder)
         iCur++;
         while(szRootFolder[iCur])
             m_strSshRootPath += szRootFolder[iCur++];
+        //add '/' if necessary.
+        if(m_strSshRootPath[0] != '/'){
+            m_strSshRootPath.insert(0,"/");
+        }
     }
     else if(szRootFolder[iCur] != 0)//nothing else should be here after servername [and port number].
     {
@@ -115,7 +119,6 @@ INIT_STATUS CSsh2BackupFolder::splitSshPath(const char* szRootFolder)
         return initErrorInvalidChar;
     }
     
-    //TODO: decide whether it is prudent or not.
     m_strRootPath = m_strSshRootPath;
     
     return initSuccess;
